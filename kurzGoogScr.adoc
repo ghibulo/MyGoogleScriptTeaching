@@ -1,0 +1,824 @@
+// vim: set syntax=asciidoc:
+
+= Kurz - Google Apps Script 
+:source-highlighter: coderay
+:coderay-linenums-mode: inline
+:coderay-css: class
+Jirka Hrbek <jirka.hrbek@google.com>
+:toc:
+:toc-title: Obsah
+:icons: font
+:imagesdir: obrazky
+:quick-uri: http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/
+:blank: pass:[ +]
+
+:bigblank: pass:[ <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>]
+
+
+
+:toc-title: Název
+:caution-caption: Pozor
+:important-caption: Důležité
+:note-caption: Poznámka
+:tip-caption: Myšlenka
+:warning-caption: Warnung
+:appendix-caption: Anhang
+:example-caption: Příklad
+:figure-caption: Obrázek
+:table-caption: Tabulka
+
+
+
+== Apps Script a Javascript se rýmují...
+
+=== Lehké zopakování
+
+- link:++https://www.w3schools.com/js/js_string_methods.asp++[typ String], číslo, datum...
+- link:++https://www.w3schools.com/js/js_arrays.asp++[Pole]
+- link:++https://www.w3schools.com/js/js_functions.asp++[Funkce]
+- link:++https://www.w3schools.com/js/js_scope.asp++[Platnost proměnných]
+- link:++https://www.w3schools.com/js/js_events.asp++[Události]
+- link:++https://www.w3schools.com/js/js_loop_for.asp++[Cykly], podmínky apod.
+- link:++https://www.w3schools.com/js/js_object_definition.asp++[Objekty]
+
+=== Práce s formulářem
+
+[source,javascript]
+----
+<HTML>
+  <HEAD>
+    <SCRIPT>
+      function testResults(form) {
+        var TestVar = vstup.value;
+        alert("Napsal jsi: " + TestVar);
+        vystup.innerHTML = TestVar;
+      }
+
+    </SCRIPT>
+  </HEAD>
+
+  <BODY>
+    Napiš něco:
+    <BR>
+    <INPUT TYPE="text" NAME="inputbox" id="vstup" VALUE="">
+    <P>
+      <INPUT TYPE="button" NAME="button" Value="Click" onClick="testResults()">
+      <p id="vystup"></p>
+  </BODY>
+</HTML>
+----
+
+TIP: Vyzkoušej v link:++https://jsfiddle.net/++[jsFiddle] nebo v nějakém link:++https://www.w3schools.com/js/tryit.asp?filename=tryjs_events_onmouse++[Tryit - w3schools]
+
+- link:++https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_radio_value3++[Radio buttony]
+- link:++https://www.w3schools.com/js/tryit.asp?filename=try_dom_select_option++[Dropdown list]
+
+
+CAUTION: *A máme tu první úkol!* Vyrobme si cvičně prográmek, který nás bude zkoušet ze slovíček. Do nějakého pole/polí si nasypeme pár dvojic, formulář vybere jednu z dvojic a ukáže „český“ výraz. Formulář přijme vstup, javascriptová funkce zjistí jestli je správný, ohodnotí výsledek a po stisku tlačítka „Další“ se zobrazí další volba... Zajistěte, aby sezeptal 4x a na závěr udělil známku (výborný -> nedostatečný).
+
+
+
+{bigblank}
+
+
+
+[quote, Nejmenovaný zkušený kolega, neformální hovor]
+____
+„Matikář, který neumí ovládat tabulkový kalkulátor ... zaspal dobu!“
+____
+
+
+
+== Vlastní funkce v Google Sheets
+
+
+=== Vstupem i výstupem jeden operand
+
+[source,javascript]
+----
+/**
+ * Multiplies the input value by 2.
+ *
+ * @param {number} input The value to multiply.
+ * @return The input multiplied by 2.
+ * @customfunction
+ */
+function MDOUBLE(input) {
+  return input * 2;
+}
+----
+
+
+=== Vstupem pole, výstupem operand
+
+[source,javascript]
+----
+function mujdeterminant(mt) {
+   return mt[0][0]*mt[1][1]-mt[0][1]*mt[1][0];
+}
+----
+
+
+=== Vstupem pole, výstupem pole
+
+[source,javascript]
+----
+function mujsoucet(a,b) {
+  c = [[a[0][0]+b[0][0] , a[0][1]+b[0][1]],
+    [a[1][0]+b[1][0] , a[1][1]+b[1][1]]];
+ return c; 
+}
+----
+
+
+=== Vstup může být připraven na více parametrů
+
+ve funkci je připraveno pole _arguments_ , jehož velikost si můžeme zjistit...
+
+[source,javascript]
+----
+function mujsoucet() {
+  if (arguments.length == 2) return arguments[0]+arguments[1];
+  if (arguments.length == 1) return arguments[0];
+  return 0; 
+}
+----
+
+
+=== Cvičení
+
+CAUTION: Vytvoř funkci, která vrátí true/false, podle toho, jestli se jedná o prvočíslo
+
+CAUTION: Vytvoř funkci, která zjistí, jestli je číslo dokonalé
+
+CAUTION: Vytvoř funkci, jejímž vstupem budou 3 číslice, představující koeficienty kv.rce a výstupem budou 3 buňky - D, x1, x2. Pokud konkrétní kořen existovat nebude, zůstane buňka prázdná.
+
+CAUTION: Vytvoř funkci, jejímž vstupem bude text a výstupem „zakódovaný“ text ve smyslu posunu v ascii tabulce. Posun budu moci zadat, pokud ho nezadám - posune se o konkrétní hodnotu.
+
+TIP: *Dokonalé číslo* je v matematice označení pro číslo, u kterého platí, že je součtem všech svých dělitelů (kromě sebe samotného). Například číslo 6 má dělitele 1, 2, 3 a platí, že 1 + 2 + 3 = 6. Dalšími takovými čísly jsou ještě např. 28, 496, 8128.
+
+TIP: Matematické funkce v javascriptu na link:++https://www.w3schools.com/js/js_math.asp++[w3schools] 
+
+TIP: Textové funkce v javascriptu na link:++https://www.w3schools.com/js/js_string_methods.asp++[w3schools] ... převodní funkce _txt.charCodeAt() x String.fromCharCode()_
+
+
+
+== Dokument v __Apps Script__u
+
+=== Odkaz na aktuální dokument
+
+[source,javascript]
+----
+  var doc = SpreadsheetApp.getActive();
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var sheety = doc.getSheets();
+  Logger.log("adresa: "+doc.getUrl());
+  Logger.log("aktuální sheet: "+sheet.getName());
+  doc.setActiveSheet(sheety[sheety.length -1]);
+  doc.renameActiveSheet("pracovní");
+----
+
+TIP: Vice link:++https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app++[referenční dokumentace - Class SpreadsheetApp]
+
+=== Akce v tabulce
+
+[source,javascript]
+----
+  var doc = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = doc.getSheets()[1];
+  var hb1 = sheet.getRange("B1").getValue(); //nebo sheet.getRange(1,2).getValue();
+  sheet.setActiveSelection("A5:D7");
+  var range =  sheet.getActiveRange();
+  range.setValue(hb1); //nastaví stejnou hodnotu do každé buňky
+  range.clearFormat();
+  range.setFontLine('line-through');
+  range.setFontStyle("italic");
+  range.setFontColor("red");  
+  Logger.log(range.getA1Notation());
+----
+
+TIP: Podrobně k akcím ve sheetu - viz. link:++https://developers.google.com/apps-script/reference/spreadsheet/sheet++[ref.dokumentace]
+
+
+=== Práce s daty
+
+[source,javascript]
+----
+  var doc = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = doc.getActiveSheet();
+  var range =  sheet.getActiveRange();
+  var hodn = range.getValues();
+  Logger.log(hodn);
+  hodn[0][1]++; //navýšena hodnota buňky v prvním řádku, druhém sloupci
+  range.setValues(hodn);
+  range.getCell(1,2).setFontColor("red"); //ta samá buňka do červena
+----
+
+
+=== Ukázka se vzorcem
+
+[source,javascript]
+----
+ var ss = SpreadsheetApp.getActiveSpreadsheet();
+ var sheet = ss.getActiveSheet();
+
+ // V A10 je vzorec =A9*4, A9 = 5
+ var range = sheet.getRange("A10");
+
+ // Spočtená hodnota: 20.0 Vzorec: =A9*4 ZápisR1C1: =R[-1]C[0]*4
+  Logger.log("Spočtená hodnota: %s Vzorec: %s ZápisR1C1: %s",
+            range.getValue(),
+            range.getFormula(), range.getFormulaR1C1());
+  //při nastavení jednoho vzorce do celé oblasti se samozřejmě upravuje jako při kopírování
+  sheet.getRange("A10:C12").setFormula("=A9*$B$4");
+----
+
+
+=== Kopírování
+
+Zkopírovat vybranou oblast od konkrétní buňky je snadné. Při kopírování vzorců se tyto samozřejmě upravují jak je zvykem.
+
+[source,javascript]
+----
+   var ss = SpreadsheetApp.getActiveSpreadsheet();
+   var sheet = ss.getActiveSheet();
+   var range = sheet.getActiveRange();
+   range.copyTo(sheet.getRange("D13"));  
+----
+
+=== Cvičení
+
+CAUTION: Vytvoř funkci, která ke každé buňce vybrané oblasti přičte jedničku
+
+CAUTION: Vytvoř funkci, která ve vybrané oblasti všechny buňky které budou obsahovat podprůměrnou hodnotou obarví červeně a všechny nadprůměrné zeleně
+
+CAUTION: Vytvoř funkci, která bude řešit libovolnou rovnici (která má na pravé straně 0) metodou půlení intervalů. V první buňce bude dolní mez intervalu, v druhé horní mez, ve třetí hodnota tolerance a v poslední bude vzorec, který bude počítat hodnotu pravé strany rovnice z dolní meze. Můžeme předpokládat, že navržený interval bude mít pro jednu svou mez kladnou a pro druhou zápornou hodnotu pravé strany rovnice. Výsledkem vzorce budou přepsané meze tak, aby jejich vzdálenost na číselné ose byla menší než tolerance.
+
+CAUTION: Vyberu čtveřici buněk - první hodnotu, vzorec (operující s první hodnotou), krok a počet hodnot. Pod touto čtveřicí se mi vytvoří tabulka připravená pro vytvoření grafu funkce. ... _řešení přiloženo_
+
+CAUTION: Vytvoř si vlastního kontrolora pro hru logik. Do pěti buněk počítač rozmístí 5 různých jednociferných čísel. Tyto čísla budou zakryta bílým inkoustem. Hráč do jedné buňky napíše svůj odhad a spustí skript. Tento skript do vedlejší buňky umístí hodnocení - počet bílých kolíků (uhodnuté číslo na nesprávném pořadí) a počet černých kolíků (uhodnuté číslo na správném pořadí). Skripty tedy budou dva - jeden bude generovat nové zadání a druhý bude hodnotit.
+
+TIP: Vyzkoušej vytvořit tlačítko (_insert->drawing_), kterým budeš svůj skript spouštět
+
+
+*Řešení poslední úlohy z pondělka:* 
+
+- nejprve doladěná verze ze školy:
+
+[source,javascript]
+----
+function tabulkaProGraf() {
+  var doc = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = doc.getActiveSheet();
+  var range =  sheet.getActiveRange();
+  var hodn = range.getValues();
+
+  var pocHodnota = hodn[0][0];  
+  var krok = hodn[0][2];
+  var pocet = hodn[0][3];
+  
+  var zapisovanaHodn = pocHodnota;
+  radka = range.getRow();
+  sloupec = range.getColumn();
+  var vzorec = sheet.getRange(radka,sloupec+1).getFormula();
+  sheet.getRange(radka,sloupec+1,pocet+1,1).setFormula(vzorec);
+  for(i=0;i<pocet;i++) {
+    zapisovanaHodn +=krok;
+    rangezapis = sheet.getRange(radka+1, sloupec, 1, 1);
+    rangezapis.setValue(zapisovanaHodn);
+    radka++;
+  }  
+}
+----
+
+- lepší nápad pomocí kopírování:
+
+[source,javascript]
+----
+function tabulkaProGraf2() {
+  var doc = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = doc.getActiveSheet();
+  var range =  sheet.getActiveRange();
+  var hodn = range.getValues();
+  
+  var pocHodnota = hodn[0][0];  
+  var krok = hodn[0][2];
+  var pocet = hodn[0][3];
+  
+  var vzorecBunka = range.offset(0, 1, 1, 1);
+  vzorecBunka.copyTo(vzorecBunka.offset(1, 0, pocet, 1));
+  
+  posloupnost=[];
+  for(i=1;i<=pocet;i++) posloupnost.push([pocHodnota+i*krok]);
+  range.offset(1,0,pocet,1).setValues(posloupnost);
+}
+----
+
+
+=== Vložené grafy
+
+Když už máme připravené tabulky pro graf - mohli bychom si vytvořit script, který by nám ho generoval...
+
+
+TIP: Ukázka jak vygenerovat nebo upravit graf skriptem je link:++https://developers.google.com/apps-script/reference/spreadsheet/embedded-chart++[zde]
+
+
+CAUTION: Vytvořit tlačítko, kterým bychom vygenerovali například link-graf pro danou tabulku
+
+
+=== Vytvořit nový dokument
+
+Vždy, když už máme k dispozici vygenerovanou tabulku s grafem, mohli bychom jedním tlačítkem nechat vygenerovat textový dokument, ve kterém by bylo pár hodnot z tabulky a samotný graf. Pokaždé, když bychom vygenerovali nový graf, mohli bychom ho jedním tlačítkem přidat do předem daného textového dokumentu. 
+
+[source,javascript]
+----
+function vytvorDoc() {
+  var doc = DocumentApp.create('DokumentPokus');
+  doc.getBody().appendParagraph('Vytvořeno ze skriptu!'); 
+  Logger.log(doc.getId() + " " + doc.getUrl());
+}
+----
+
+[source,javascript]
+----
+function upravDoc() {
+  var doc = DocumentApp.openById("1kG6-aRt-LX48Wl8dNRyZtT39dvRLnjX84racrDUWMyc");
+  doc.getBody().appendParagraph('Přidaná řádka');
+
+  //graf
+  var charts = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('grafy').getCharts();
+  var chart = charts[0].getAs('image/png');  // similar result with 'gif'
+  var doc = DocumentApp.openById("1kG6-aRt-LX48Wl8dNRyZtT39dvRLnjX84racrDUWMyc");
+  doc.getBody().appendImage(chart);  
+}
+----
+
+[source,javascript]
+----
+function vlozTabulku() {
+  var rowsData = [['Plants', 'Animals'], ['Ficus', 'Goat'], ['Basil', 'Cat'], ['Moss', 'Frog']];
+  var doc = DocumentApp.openById("1kG6-aRt-LX48Wl8dNRyZtT39dvRLnjX84racrDUWMyc");
+  var body = doc.getBody();
+  table = body.appendTable(rowsData);
+  table.getRow(0).editAsText().setBold(true);
+}
+----
+
+TIP: Podrobněji viz. link:++https://developers.google.com/apps-script/guides/docs#structure_of_a_document++[developers.google.com]
+
+
+=== Práce s kalendářem
+
+
+[source,javascript]
+----
+ var calendar = CalendarApp.createCalendar('Exkurze');
+ Logger.log('Created the calendar "%s", with the ID "%s".',
+     calendar.getName(), calendar.getId());
+----
+
+[source,javascript]
+----
+ var calendar = CalendarApp.getCalendarById(
+     'en.usa#holiday@group.v.calendar.google.com');
+ Logger.log('The calendar is named "%s".', calendar.getName());
+
+ var event = calendar.createAllDayEvent('Exkurze Boubín',
+     new Date('July 20, 2017'));
+ Logger.log('Event ID: ' + event.getId());
+----
+
+[source,javascript]
+----
+ var now = new Date();
+ var twoHoursFromNow = new Date(now.getTime() + (2 * 60 * 60 * 1000));
+ var events = CalendarApp.getDefaultCalendar().getEvents(now, twoHoursFromNow);
+ Logger.log('Number of events: ' + events.length);
+
+----
+
+
+
+TIP: Podrobněji v referenční nápovědě ++https://developers.google.com/apps-script/reference/calendar/calendar-app#getDefaultCalendar()  ++[CalendarApp]
+
+CAUTION: Kdybychom měli seznam navrhovaných akcí, u každé by bylo uvedno počáteční a koncové datum a název akce, uměli bychom napsat script, který by nám vždy akci na které bychom byli kurzorem zapsal do kalendáře a viditelně označil? Pokud by v řádku byla i mailová adresa - mohli bychom rovnou odesílat i mail, že s navrhovanou akcí počítáme.
+
+
+TIP: odeslání mailu je s třídou link:++https://developers.google.com/apps-script/reference/mail/mail-app MailApp snadne:++[MailApp] snadné:
+
+[source,javascript]
+----
+var emailAddress = row[0];  // First column
+    var message = row[1];       // Second column
+    var subject = "Sending emails from a Spreadsheet";
+    MailApp.sendEmail(emailAddress, subject, message);
+----
+
+TIP: Když už máme kalendář, tak bychom si ho mohli vložit na nějaké webové stránky...
+
+
+== Sbíráme a vyhodnocujeme data formulářem
+
+Připravíme si formulář registrace na smyšlenou akci:
+- Jméno
+- Právo na slevu?
+- Které dny účasten?
+- Jak moc aktivní účastník?
+- Max. počet spolunocležníků
+- Návrh doby snídaně
+- Jídlo pro každý den (nic, polo, plná penze)
+
+
+CAUTION: Připravíme script, který všem zaregistrovaným účastíkům odešle potvrzující mail se souhrnnou cenou a dobou snídaně. Je možné také umístit kurzor na daného účastníka a stisknout tlačítko k odeslání potvrzujícího mailu, nebo tlačítko k vyškrtnutí s tím, že nezaplatil, v takovém případě je vhodné pracovat s kopií tabulky odpovědí...
+
+TIP: Jak posílat mail... link:++https://developers.google.com/apps-script/reference/mail/mail-app++[Class MailApp]
+
+TIP: Umístím kurzor na řádku a spustím skript - kde se momentálně nacházím? jak vyškrtnu či přepíšu? ->
+
+[source,javascript]
+----
+ var ss = SpreadsheetApp.getActiveSpreadsheet();
+ var sheet = ss.getActiveSheet();
+
+ var range = sheet.getActiveCell();
+ Logger.log(range.getRow() + " - "+range.getColumn());
+
+ range = sheet.getRange(1,2); //přesunu na B1
+ range.setFontLine('line-through'); //vyškrtnu
+ range.setValue("buňka B1");
+
+ range = sheet.getRange(3,2,1,5); //od B1 jednu řádku a pět sloupců
+ range.setFontLine('line-through'); //vyškrtnu
+ range.setValue("víc buněk"); //do všech pěti buněk
+ ss.setActiveSelection(range);
+
+----
+
+
+CAUTION: Připravíme script, který vytvoří přehled pro pořadatele - počet jídel pro jednotlivé dny, přehled počtu a druhů pokojů, které je třeba registrovat, minimální počet nahlášených přednášek a seznam jmen s vybranou sumou peněz.
+
+TIP: Nejprve si do 2D pole připravím hodnoty, se kterými budu pracovat...
+
+[source,javascript]
+----
+  var doc = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = doc.getSheets()[0]; //v prvním sheetu mám data z formuláře
+  var range = sheet.getDataRange(); //rozsah všech dat
+  var hodn = range.getValues(); //hodnoty celého rozsahu
+  Logger.log(hodn);
+----
+
+TIP: Pak si otevřu sheet, do kterého budu zapisovat...
+
+[source,javascript]
+----
+ var writesheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Přehled");
+ if (writesheet != null) {
+     writesheet.getRange(1,1).setValue("Přehled akce...");
+     //atd
+ } else {
+   Logger.log("problém -> nemám sheet Přehled");
+ }
+----
+
+
+
+== Dialogy - komfortnější komunikace s uživatelem
+
+Na dialogy a menu se hodí link:++https://developers.google.com/apps-script/reference/base/ui++[třída Ui]
+
+=== Standardní dialogy
+
+TIP: Podrobně vysvětleno link:++https://developers.google.com/apps-script/guides/dialogs++[zde]
+
+
+Využití jednoduchého triggeru *onOpen* na vytvoření menu a dialog ano/ne
+
+[source,javascript]
+----
+function onOpen() {
+  SpreadsheetApp.getUi() // Or DocumentApp or FormApp.
+      .createMenu('Custom Menu')
+      .addItem('Show alert', 'showAlert')
+      .addItem('Show prompt', 'showPrompt')
+      .addToUi();
+}
+
+function showAlert() {
+  var ui = SpreadsheetApp.getUi(); // Same variations.
+
+  var result = ui.alert(
+     'Please confirm',
+     'Are you sure you want to continue?',
+      ui.ButtonSet.YES_NO);
+
+  // Process the user's response.
+  if (result == ui.Button.YES) {
+    // User clicked "Yes".
+    ui.alert('Confirmation received.');
+  } else {
+    // User clicked "No" or X in the title bar.
+    ui.alert('Permission denied.');
+  }
+}
+
+function showPrompt() {
+  var ui = SpreadsheetApp.getUi(); // Same variations.
+
+  var result = ui.prompt(
+      'Let\'s get to know each other!',
+      'Please enter your name:',
+      ui.ButtonSet.OK_CANCEL);
+
+  // Process the user's response.
+  var button = result.getSelectedButton();
+  var text = result.getResponseText();
+  if (button == ui.Button.OK) {
+    // User clicked "OK".
+    ui.alert('Your name is ' + text + '.');
+  } else if (button == ui.Button.CANCEL) {
+    // User clicked "Cancel".
+    ui.alert('I didn\'t get your name.');
+  } else if (button == ui.Button.CLOSE) {
+    // User clicked X in the title bar.
+    ui.alert('You closed the dialog.');
+  }
+}
+----
+
+CAUTION: Vyber si některou s předchozích úloh (půlení intervalů/logik/funkční hodnoty) a udělej k nim komfortnější ovládání pomocí oznamovacího a promptního standardního dialogu.
+
+
+=== Rozšíření „triggerů“
+
+==== onEdit
+
+Vyzkoušeli jsme si trigger _onOpen_, další hodně používaný je _onEdit_ -> spouští se při každém pokusu o editaci. Jako parametr získává _event_ - událost, tedy objekt, který obsahuje mimo jiné zajímavé prvky:
+- _range_ ... tedy rozsah, který byl editován
+- _value_ ... tedy nová hodnota
+- _oldValue_ ... původní hodnota
+
+CAUTION: Zkusme si vytvořit skript, který umožní do volného pole vložit novou hodnotu, ale při pokusu o její přepsání se tam vrátí vždy původní hodnota. Takový dokument může být užitečný, pokud budeme chtít, aby přihlášení uživatelé tabulky někam něco mohli vepsat... ale ne přepisovat.
+
+==== Instalovatelné „triggery“
+
+Menu v „editoru skriptů“ -> Upravit -> Spouštěče aktuálního projektu. Kromě ručního zadání je možné aby trigger nastavil náš skript v okamžiku, kdy je potřeba:
+
+
+[source,javascript]
+----
+    ScriptApp.newTrigger('myFunction')
+      .timeBased().everyMinutes(1).create();
+----
+
+TIP: podrobněji rozebráno link:++https://developers.google.com/apps-script/guides/triggers/installable++[zde]
+
+CAUTION: Časové triggery by se daly využít například na nějaké odpočítávání času testu, ale mohli bychom si vytvořit tabulku, do které bychom si ukládali datum, mailovou adresu a zprávu. Náš skript projde celý seznam, odešle zprávy, které mají být odeslány dnes a naplánuje vlastní spuštění na nejbližší další datum
+
+
+=== Vlastní dialogy
+
+Lze zobrazit klasickou web stránku, například _Page.html_
+
+[source,javascript]
+----
+function showDialog() {
+  var html = HtmlService.createHtmlOutputFromFile('Page')
+      .setWidth(400)
+      .setHeight(300);
+  SpreadsheetApp.getUi() // Or DocumentApp or FormApp.
+      .showModalDialog(html, 'My custom dialog');
+}
+
+function doSomething() {
+  Logger.log('I was called!');
+}
+----
+
+pass:[...] která může vypadat takto:
+
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <script>
+      google.script.run.doSomething();
+    </script>
+  </head>
+  <body>
+    Hello, World!
+    <input type="button" value="Close"
+        onclick="google.script.host.close()" />
+  </body>
+</html>
+----
+
+
+- Tento dialog nepozastaví skript na serveru (ze kterého byl zobrazen), nicméně může pomocí volání _google.script_ a pomocí _handlerů_ komunikovat se server-side skriptem.
+- Volali jsme server-side funkci - volání je asynchronní, provádění _Page.html_ pokračuje => trochu problém s předáváním parametrů - viz.dále
+
+Pokud bude náš skript obsahovat další jednoduchý trigger *doGet*, tak se nám stránka otevře kdykoliv se obrátíme na URL našeho skriptu třeba prohlížečem:
+
+[source,javascript]
+----
+function doGet() {
+  return HtmlService.createHtmlOutputFromFile('Page');
+}
+----
+
+=== Komunikace Client <-> Server
+
+[source,javascript]
+----
+function doGet() {
+  return HtmlService.createHtmlOutputFromFile('Index');
+}
+
+function getUnreadEmails() {
+  return GmailApp.getInboxUnreadCount();
+}
+----
+
+[source,javascript]
+----
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <script>
+      function onSuccess(numUnread) {
+        var div = document.getElementById('output');
+        div.innerHTML = 'You have ' + numUnread
+            + ' unread messages in your Gmail inbox.';
+      }
+
+      google.script.run.withSuccessHandler(onSuccess)
+          .getUnreadEmails();
+    </script>
+  </head>
+  <body>
+    <div id="output"></div>
+  </body>
+</html>
+----
+
+
+CAUTION: Vytvoř vlastní web stránku, která bude dostávat při každém načtení (nebo stištění tlačítka) „výroky moudrých“ připravené v tabulkovém kalkulátoru. Server-side funkce vybere náhodný výrok a odešle ho k zobrazení podobně jako počet nepřečtených zpráv v ukázkovém příkladu.
+
+CAUTION: Server-side skript si bude udržovat svojí zásobu slovíček (dva sloupce). Při každém zavolání promíchá pořadí slov a celé pole odešle clientovi. Ten bude vhodným způsobem předkládat toto pole slovních spojení uživatelovi k procvičování.
+
+
+== Získávání informací parsováním webů
+
+
+[quote, Hrbek]
+____
+„Když umíme googlit my, proč ne i naše prográmky?“
+____
+
+
+=== importfeed
+
+Asi nejpohodlnější je získat informace z RSS zdroje. Jednak je obecně dostupný a jednak je struktura těchto dat obvykle tvořena strojově a tím pádem je i náš výstup bezchybný. Google Sheets nám k tomu poskytuje spolehlivou funkci:
+
+[source]
+----
+=importfeed("https://zpravy.aktualne.cz/rss/zahranici/?_ga=2.190788203.151206811.1498994209-1889217661.1495482134","items title",TRUE)
+----
+
+TIP: podrobnější popis link:++https://support.google.com/docs/answer/3093337?hl=en++[zde]
+
+Vyzkoušejte si vyparsovat informace například z IDNES, pohrajte si s parametry. Kdo má chuť, může si zkusit těmito „ukradnutými“ informacemi plnit svůj prográmek, který předkládal „výroky moudrých“ v předchozí kapitole.
+
+=== importhtml
+
+Pokud není k dispozici RSS kanál a daná stránka obsahuje seznamy/tabulky, může se hodit užitečná funkce importhtml. 
+
+
+TIP: podrobněji: https://support.google.com/docs/answer/3093339?hl=en
+
+
+Vyzkoušejte například na rozvrhu *učitelů Gymso*:
+
+Místnost:
+
+https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&mistnost=7.%20B
+
+https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&mistnost=7.%20B&obdobi=PRISTI
+
+https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&mistnost=7.%20B&obdobi=1
+
+--
+
+Třída:
+
+https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&trida=7.B
+
+https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&trida=7.B&obdobi=PRISTI
+
+https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&trida=7.B&obdobi=1
+
+--
+
+Učitel:
+
+https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&ucitel=Hrbek
+
+https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&ucitel=Hrbek&obdobi=PRISTI
+
+https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&ucitel=Hrbek&obdobi=1
+
+Jinak háčky čárky samozřejmě encodovat...
+https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&ucitel=%C5%A0v%C3%A1cha
+
+
+nebo třeba *měnové kurzy*: http://www.xe.com
+
+
+
+
+=== Chce to přepsat do apps-scriptu
+
+Proč? Protože se nám funkce nebude obnovovat i když na webu ke změně dojde a na skript můžeme nastavit časový trigger. Ten pak poběží i když náší tabulku zavřeme a pokud budeme informace zprostředkovávat například pomocí doget -> tak budou informace stále aktuální. Hrbek by si mohl na svůj stálý rozvrh připravit např. tuto funkci:
+
+[source,javascript]
+----
+function getData() {
+  var queryString = Math.random();
+  var cellFunction = '=IMPORTHTML("https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&ucitel=Hrbek&obdobi=1?' + queryString + '","table",14)';
+
+  SpreadsheetApp.getActiveSheet().getRange('B4').setValue(cellFunction);
+}
+----
+
+
+== Trochu si pohrajeme s mapou
+
+[source,javascript]
+----
+
+function showHtmlWin() {
+  var html = HtmlService.createHtmlOutputFromFile('pok.html').setWidth(800);
+  SpreadsheetApp.getUi().showModalDialog(html, "Memword"); //.showSidebar(html);
+}
+
+
+
+function getMapu() {
+   // Get the sheet named 'restaurants'
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('restaurants');
+
+  // Store the restaurant name and address data in a 2-dimensional array called
+  // restaurantInfo. This is the data in cells A2:B4
+  var restaurantInfo = sheet.getRange(2, 1, sheet.getLastRow() - 1, 2).getValues();
+
+  // Create a new StaticMap
+  var restaurantMap = Maps.newStaticMap();
+  
+    for (var i = 0; i < restaurantInfo.length; i++) {
+    restaurantMap.setMarkerStyle(Maps.StaticMap.MarkerSize.MID,
+                                 Maps.StaticMap.Color.GREEN,
+                                 i + 1);
+    restaurantMap.addMarker(restaurantInfo[i][1]);
+  }
+  
+  return restaurantMap.getMapUrl();
+  
+}
+----
+
+[source,javascript]
+----
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <script>
+	    function addMap() {
+	       w = google.script.run.withSuccessHandler(onSuccess).getMapu();
+	    }
+	    
+	    function onSuccess(wrd) {
+		s = document.getElementById("map");
+		s.src = wrd;
+	    }
+
+
+    
+    </script>
+    
+    
+  </head>
+  <body onload="addMap()">
+    tady...<br>
+    <img src="" id="map">
+  </body>
+</html>
+
+----
+
+
+
+_Pokračovat přes 'fetchup', regulární výrazy, fusion a sql..._

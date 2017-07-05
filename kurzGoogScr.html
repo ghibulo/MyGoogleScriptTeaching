@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<meta name="author" content="Jirka Hrbek">
+<title>Kurz - Google Apps Script</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
+/* Remove comment around @import statement below when using as a custom stylesheet */
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
+audio,canvas,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+[hidden],template{display:none}
+script{display:none!important}
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+a{background:transparent}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+abbr[title]{border-bottom:1px dotted}
+b,strong{font-weight:bold}
+dfn{font-style:italic}
+hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}
+input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.center{margin-left:auto;margin-right:auto}
+.spread{width:100%}
+p.lead,.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{font-size:1.21875em;line-height:1.6}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0;direction:ltr}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:none}
+p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #ddddd8;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol,ul.no-bullet,ol.no-bullet{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.no-bullet{list-style:none}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
+abbr{text-transform:none}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
+blockquote cite:before{content:"\2014 \0020"}
+blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media only screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
+table thead,table tfoot{background:#f7f8f7;font-weight:bold}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.clearfix:before,.clearfix:after,.float-group:before,.float-group:after{content:" ";display:table}
+.clearfix:after,.float-group:after{clear:both}
+*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed;word-wrap:break-word}
+*:not(pre)>code.nobreak{word-wrap:normal}
+*:not(pre)>code.nowrap{white-space:nowrap}
+pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menu{color:rgba(0,0,0,.8)}
+b.button:before,b.button:after{position:relative;top:-1px;font-weight:400}
+b.button:before{content:"[";padding:0 3px 0 2px}
+b.button:after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header:before,#header:after,#content:before,#content:after,#footnotes:before,#footnotes:after,#footer:before,#footer:after{content:" ";display:table}
+#header:after,#content:after,#footnotes:after,#footer:after{clear:both}
+#content{margin-top:1.25em}
+#content:before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #ddddd8}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #ddddd8;padding-bottom:8px}
+#header .details{border-bottom:1px solid #ddddd8;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span:before{content:"\00a0\2013\00a0"}
+#header .details br+span.author:before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark:before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber:after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #ddddd8;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #efefed;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media only screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background-color:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #efefed;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #efefed;left:auto;right:0}}
+@media only screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:100%;background-color:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+.sect1{padding-bottom:.625em}
+@media only screen and (min-width:768px){.sect1{padding-bottom:1.25em}}
+.sect1+.sect1{border-top:1px solid #efefed}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor:before,h2>a.anchor:before,h3>a.anchor:before,#toctitle>a.anchor:before,.sidebarblock>.content>.title>a.anchor:before,h4>a.anchor:before,h5>a.anchor:before,h6>a.anchor:before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock>caption.title{white-space:nowrap;overflow:visible;max-width:0}
+.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{color:rgba(0,0,0,.85)}
+table.tableblock #preamble>.sectionbody>.paragraph:first-of-type p{font-size:inherit}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #ddddd8;color:rgba(0,0,0,.6)}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock pre:not(.highlight),.listingblock pre[class="highlight"],.listingblock pre[class^="highlight "],.listingblock pre.CodeRay,.listingblock pre.prettyprint{background:#f7f7f8}
+.sidebarblock .literalblock pre,.sidebarblock .listingblock pre:not(.highlight),.sidebarblock .listingblock pre[class="highlight"],.sidebarblock .listingblock pre[class^="highlight "],.sidebarblock .listingblock pre.CodeRay,.sidebarblock .listingblock pre.prettyprint{background:#f2f1f1}
+.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;padding:1em;font-size:.8125em}
+.literalblock pre.nowrap,.literalblock pre[class].nowrap,.listingblock pre.nowrap,.listingblock pre[class].nowrap{overflow-x:auto;white-space:pre;word-wrap:normal}
+@media only screen and (min-width:768px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:.90625em}}
+@media only screen and (min-width:1280px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:1em}}
+.literalblock.output pre{color:#f7f7f8;background-color:rgba(0,0,0,.9)}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]:before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:#999}
+.listingblock:hover code[data-lang]:before{display:block}
+.listingblock.terminal pre .command:before{content:attr(data-prompt);padding-right:.5em;color:#999}
+.listingblock.terminal pre .command:not([data-prompt]):before{content:"$"}
+table.pyhltable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.pyhltable td{vertical-align:top;padding-top:0;padding-bottom:0;line-height:1.45}
+table.pyhltable td.code{padding-left:.75em;padding-right:0}
+pre.pygments .lineno,table.pyhltable td:not(.code){color:#999;padding-left:0;padding-right:.5em;border-right:1px solid #ddddd8}
+pre.pygments .lineno{display:inline-block;margin-right:.25em}
+table.pyhltable .linenodiv{background:none!important;padding-right:0!important}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock blockquote p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote:before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.5em;margin-right:.5ex;text-align:right}
+.quoteblock .quoteblock{margin-left:0;margin-right:0;padding:.5em 0;border-left:3px solid rgba(0,0,0,.6)}
+.quoteblock .quoteblock blockquote{padding:0 0 0 .75em}
+.quoteblock .quoteblock blockquote:before{display:none}
+.verseblock{margin:0 1em 1.25em 1em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract{margin:0 0 1.25em 0;display:block}
+.quoteblock.abstract blockquote,.quoteblock.abstract blockquote p{text-align:left;word-spacing:0}
+.quoteblock.abstract blockquote:before,.quoteblock.abstract blockquote p:first-of-type:before{display:none}
+table.tableblock{max-width:100%;border-collapse:separate}
+table.tableblock td>.paragraph:last-child p>p:last-child,table.tableblock th>p:last-child,table.tableblock td>p:last-child{margin-bottom:0}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all th.tableblock,table.grid-all td.tableblock{border-width:0 1px 1px 0}
+table.grid-all tfoot>tr>th.tableblock,table.grid-all tfoot>tr>td.tableblock{border-width:1px 1px 0 0}
+table.grid-cols th.tableblock,table.grid-cols td.tableblock{border-width:0 1px 0 0}
+table.grid-all *>tr>.tableblock:last-child,table.grid-cols *>tr>.tableblock:last-child{border-right-width:0}
+table.grid-rows th.tableblock,table.grid-rows td.tableblock{border-width:0 0 1px 0}
+table.grid-all tbody>tr:last-child>th.tableblock,table.grid-all tbody>tr:last-child>td.tableblock,table.grid-all thead:last-child>tr>th.tableblock,table.grid-rows tbody>tr:last-child>th.tableblock,table.grid-rows tbody>tr:last-child>td.tableblock,table.grid-rows thead:last-child>tr>th.tableblock{border-bottom-width:0}
+table.grid-rows tfoot>tr>th.tableblock,table.grid-rows tfoot>tr>td.tableblock{border-width:1px 0 0 0}
+table.frame-all{border-width:1px}
+table.frame-sides{border-width:0 1px}
+table.frame-topbot{border-width:1px 0}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{display:table-cell;line-height:1.6;background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+td>div.verse{white-space:pre}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.unstyled,ol.unnumbered,ul.checklist,ul.none{list-style-type:none}
+ul.unstyled,ol.unnumbered,ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1em;font-size:.85em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{width:1em;position:relative;top:1px}
+ul.inline{margin:0 auto .625em auto;margin-left:-1.375em;margin-right:0;padding:0;list-style:none;overflow:hidden}
+ul.inline>li{list-style:none;float:left;margin-left:1.375em;display:block}
+ul.inline>li>*{display:block}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist>table tr>td:first-of-type{padding:0 .75em;line-height:1}
+.colist>table tr>td:last-of-type{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.imageblock.left,.imageblock[style*="float: left"]{margin:.25em .625em 1.25em 0}
+.imageblock.right,.imageblock[style*="float: right"]{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em 0;border-width:1px 0 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;text-indent:-1.05em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background-color:#00fafa}
+.black{color:#000}
+.black-background{background-color:#000}
+.blue{color:#0000bf}
+.blue-background{background-color:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background-color:#fa00fa}
+.gray{color:#606060}
+.gray-background{background-color:#7d7d7d}
+.green{color:#006000}
+.green-background{background-color:#007d00}
+.lime{color:#00bf00}
+.lime-background{background-color:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background-color:#7d0000}
+.navy{color:#000060}
+.navy-background{background-color:#00007d}
+.olive{color:#606000}
+.olive-background{background-color:#7d7d00}
+.purple{color:#600060}
+.purple-background{background-color:#7d007d}
+.red{color:#bf0000}
+.red-background{background-color:#fa0000}
+.silver{color:#909090}
+.silver-background{background-color:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background-color:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background-color:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background-color:#fafa00}
+span.icon>.fa{cursor:default}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note:before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip:before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning:before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution:before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important:before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background-color:rgba(0,0,0,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]:after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background-color:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@media print{@page{margin:1.25cm .75cm}
+*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]:after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #ddddd8!important;padding-bottom:0!important}
+.sect1{padding-bottom:0!important}
+.sect1+.sect1{border:0!important}
+#header>h1:first-child{margin-top:1.25rem}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em 0}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span:before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]:before{display:block}
+#footer{background:none!important;padding:0 .9375em}
+#footer-text{color:rgba(0,0,0,.6)!important;font-size:.9em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<style>
+/* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
+/*pre.CodeRay {background-color:#f7f7f8;}*/
+.CodeRay .line-numbers{border-right:1px solid #d8d8d8;padding:0 0.5em 0 .25em}
+.CodeRay span.line-numbers{display:inline-block;margin-right:.5em;color:rgba(0,0,0,.3)}
+.CodeRay .line-numbers strong{color:rgba(0,0,0,.4)}
+table.CodeRay{border-collapse:separate;border-spacing:0;margin-bottom:0;border:0;background:none}
+table.CodeRay td{vertical-align: top;line-height:1.45}
+table.CodeRay td.line-numbers{text-align:right}
+table.CodeRay td.line-numbers>pre{padding:0;color:rgba(0,0,0,.3)}
+table.CodeRay td.code{padding:0 0 0 .5em}
+table.CodeRay td.code>pre{padding:0}
+.CodeRay .debug{color:#fff !important;background:#000080 !important}
+.CodeRay .annotation{color:#007}
+.CodeRay .attribute-name{color:#000080}
+.CodeRay .attribute-value{color:#700}
+.CodeRay .binary{color:#509}
+.CodeRay .comment{color:#998;font-style:italic}
+.CodeRay .char{color:#04d}
+.CodeRay .char .content{color:#04d}
+.CodeRay .char .delimiter{color:#039}
+.CodeRay .class{color:#458;font-weight:bold}
+.CodeRay .complex{color:#a08}
+.CodeRay .constant,.CodeRay .predefined-constant{color:#008080}
+.CodeRay .color{color:#099}
+.CodeRay .class-variable{color:#369}
+.CodeRay .decorator{color:#b0b}
+.CodeRay .definition{color:#099}
+.CodeRay .delimiter{color:#000}
+.CodeRay .doc{color:#970}
+.CodeRay .doctype{color:#34b}
+.CodeRay .doc-string{color:#d42}
+.CodeRay .escape{color:#666}
+.CodeRay .entity{color:#800}
+.CodeRay .error{color:#808}
+.CodeRay .exception{color:inherit}
+.CodeRay .filename{color:#099}
+.CodeRay .function{color:#900;font-weight:bold}
+.CodeRay .global-variable{color:#008080}
+.CodeRay .hex{color:#058}
+.CodeRay .integer,.CodeRay .float{color:#099}
+.CodeRay .include{color:#555}
+.CodeRay .inline{color:#000}
+.CodeRay .inline .inline{background:#ccc}
+.CodeRay .inline .inline .inline{background:#bbb}
+.CodeRay .inline .inline-delimiter{color:#d14}
+.CodeRay .inline-delimiter{color:#d14}
+.CodeRay .important{color:#555;font-weight:bold}
+.CodeRay .interpreted{color:#b2b}
+.CodeRay .instance-variable{color:#008080}
+.CodeRay .label{color:#970}
+.CodeRay .local-variable{color:#963}
+.CodeRay .octal{color:#40e}
+.CodeRay .predefined{color:#369}
+.CodeRay .preprocessor{color:#579}
+.CodeRay .pseudo-class{color:#555}
+.CodeRay .directive{font-weight:bold}
+.CodeRay .type{font-weight:bold}
+.CodeRay .predefined-type{color:inherit}
+.CodeRay .reserved,.CodeRay .keyword {color:#000;font-weight:bold}
+.CodeRay .key{color:#808}
+.CodeRay .key .delimiter{color:#606}
+.CodeRay .key .char{color:#80f}
+.CodeRay .value{color:#088}
+.CodeRay .regexp .delimiter{color:#808}
+.CodeRay .regexp .content{color:#808}
+.CodeRay .regexp .modifier{color:#808}
+.CodeRay .regexp .char{color:#d14}
+.CodeRay .regexp .function{color:#404;font-weight:bold}
+.CodeRay .string{color:#d20}
+.CodeRay .string .string .string{background:#ffd0d0}
+.CodeRay .string .content{color:#d14}
+.CodeRay .string .char{color:#d14}
+.CodeRay .string .delimiter{color:#d14}
+.CodeRay .shell{color:#d14}
+.CodeRay .shell .delimiter{color:#d14}
+.CodeRay .symbol{color:#990073}
+.CodeRay .symbol .content{color:#a60}
+.CodeRay .symbol .delimiter{color:#630}
+.CodeRay .tag{color:#008080}
+.CodeRay .tag-special{color:#d70}
+.CodeRay .variable{color:#036}
+.CodeRay .insert{background:#afa}
+.CodeRay .delete{background:#faa}
+.CodeRay .change{color:#aaf;background:#007}
+.CodeRay .head{color:#f8f;background:#505}
+.CodeRay .insert .insert{color:#080}
+.CodeRay .delete .delete{color:#800}
+.CodeRay .change .change{color:#66f}
+.CodeRay .head .head{color:#f4f}
+</style>
+</head>
+<body class="article">
+<div id="header">
+<h1>Kurz - Google Apps Script</h1>
+<div class="details">
+<span id="author" class="author">Jirka Hrbek</span><br>
+<span id="email" class="email"><a href="mailto:jirka.hrbek@google.com">jirka.hrbek@google.com</a></span><br>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle">Obsah</div>
+<ul class="sectlevel1">
+<li><a href="#_apps_script_a_javascript_se_rýmují">Apps Script a Javascript se rýmují&#8230;&#8203;</a>
+<ul class="sectlevel2">
+<li><a href="#_lehké_zopakování">Lehké zopakování</a></li>
+<li><a href="#_práce_s_formulářem">Práce s formulářem</a></li>
+</ul>
+</li>
+<li><a href="#_vlastní_funkce_v_google_sheets">Vlastní funkce v Google Sheets</a>
+<ul class="sectlevel2">
+<li><a href="#_vstupem_i_výstupem_jeden_operand">Vstupem i výstupem jeden operand</a></li>
+<li><a href="#_vstupem_pole_výstupem_operand">Vstupem pole, výstupem operand</a></li>
+<li><a href="#_vstupem_pole_výstupem_pole">Vstupem pole, výstupem pole</a></li>
+<li><a href="#_vstup_může_být_připraven_na_více_parametrů">Vstup může být připraven na více parametrů</a></li>
+<li><a href="#_cvičení">Cvičení</a></li>
+</ul>
+</li>
+<li><a href="#_dokument_v_em_apps_script_em_u">Dokument v <em>Apps Script</em>u</a>
+<ul class="sectlevel2">
+<li><a href="#_odkaz_na_aktuální_dokument">Odkaz na aktuální dokument</a></li>
+<li><a href="#_akce_v_tabulce">Akce v tabulce</a></li>
+<li><a href="#_práce_s_daty">Práce s daty</a></li>
+<li><a href="#_ukázka_se_vzorcem">Ukázka se vzorcem</a></li>
+<li><a href="#_kopírování">Kopírování</a></li>
+<li><a href="#_cvičení_2">Cvičení</a></li>
+<li><a href="#_vložené_grafy">Vložené grafy</a></li>
+<li><a href="#_vytvořit_nový_dokument">Vytvořit nový dokument</a></li>
+<li><a href="#_práce_s_kalendářem">Práce s kalendářem</a></li>
+</ul>
+</li>
+<li><a href="#_sbíráme_a_vyhodnocujeme_data_formulářem">Sbíráme a vyhodnocujeme data formulářem</a></li>
+<li><a href="#_dialogy_komfortnější_komunikace_s_uživatelem">Dialogy - komfortnější komunikace s uživatelem</a>
+<ul class="sectlevel2">
+<li><a href="#_standardní_dialogy">Standardní dialogy</a></li>
+<li><a href="#_rozšíření_triggerů">Rozšíření „triggerů“</a></li>
+<li><a href="#_vlastní_dialogy">Vlastní dialogy</a></li>
+<li><a href="#_komunikace_client_server">Komunikace Client &lt;&#8594; Server</a></li>
+</ul>
+</li>
+<li><a href="#_získávání_informací_parsováním_webů">Získávání informací parsováním webů</a>
+<ul class="sectlevel2">
+<li><a href="#_importfeed">importfeed</a></li>
+<li><a href="#_importhtml">importhtml</a></li>
+<li><a href="#_chce_to_přepsat_do_apps_scriptu">Chce to přepsat do apps-scriptu</a></li>
+</ul>
+</li>
+<li><a href="#_trochu_si_pohrajeme_s_mapou">Trochu si pohrajeme s mapou</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_apps_script_a_javascript_se_rýmují">Apps Script a Javascript se rýmují&#8230;&#8203;</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_lehké_zopakování">Lehké zopakování</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.w3schools.com/js/js_string_methods.asp">typ String</a>, číslo, datum&#8230;&#8203;</p>
+</li>
+<li>
+<p><a href="https://www.w3schools.com/js/js_arrays.asp">Pole</a></p>
+</li>
+<li>
+<p><a href="https://www.w3schools.com/js/js_functions.asp">Funkce</a></p>
+</li>
+<li>
+<p><a href="https://www.w3schools.com/js/js_scope.asp">Platnost proměnných</a></p>
+</li>
+<li>
+<p><a href="https://www.w3schools.com/js/js_events.asp">Události</a></p>
+</li>
+<li>
+<p><a href="https://www.w3schools.com/js/js_loop_for.asp">Cykly</a>, podmínky apod.</p>
+</li>
+<li>
+<p><a href="https://www.w3schools.com/js/js_object_definition.asp">Objekty</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_práce_s_formulářem">Práce s formulářem</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="tag">&lt;HTML&gt;</span>
+  <span class="tag">&lt;HEAD&gt;</span>
+    <span class="tag">&lt;SCRIPT&gt;</span>
+      function testResults(form) {
+        var TestVar = vstup.value;
+        alert(&quot;Napsal jsi: &quot; + TestVar);
+        vystup.innerHTML = TestVar;
+      }
+
+    <span class="tag">&lt;/SCRIPT&gt;</span>
+  <span class="tag">&lt;/HEAD&gt;</span>
+
+  <span class="tag">&lt;BODY&gt;</span>
+    Napiš něco:
+    <span class="tag">&lt;BR&gt;</span>
+    <span class="tag">&lt;INPUT</span> <span class="attribute-name">TYPE</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">NAME</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">inputbox</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">vstup</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">VALUE</span>=<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;P&gt;</span>
+      <span class="tag">&lt;INPUT</span> <span class="attribute-name">TYPE</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">button</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">NAME</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">button</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">Value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Click</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">onClick</span>=<span class="string"><span class="delimiter">&quot;</span>testResults()<span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+      <span class="tag">&lt;p</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">vystup</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/p&gt;</span>
+  <span class="tag">&lt;/BODY&gt;</span>
+<span class="tag">&lt;/HTML&gt;</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Myšlenka"></i>
+</td>
+<td class="content">
+Vyzkoušej v <a href="https://jsfiddle.net/">jsFiddle</a> nebo v nějakém <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_events_onmouse">Tryit - w3schools</a>
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_radio_value3">Radio buttony</a></p>
+</li>
+<li>
+<p><a href="https://www.w3schools.com/js/tryit.asp?filename=try_dom_select_option">Dropdown list</a></p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Pozor"></i>
+</td>
+<td class="content">
+<strong>A máme tu první úkol!</strong> Vyrobme si cvičně prográmek, který nás bude zkoušet ze slovíček. Do nějakého pole/polí si nasypeme pár dvojic, formulář vybere jednu z dvojic a ukáže „český“ výraz. Formulář přijme vstup, javascriptová funkce zjistí jestli je správný, ohodnotí výsledek a po stisku tlačítka „Další“ se zobrazí další volba&#8230;&#8203; Zajistěte, aby sezeptal 4x a na závěr udělil známku (výborný &#8594; nedostatečný).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p> <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>„Matikář, který neumí ovládat tabulkový kalkulátor &#8230;&#8203; zaspal dobu!“</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; Nejmenovaný zkušený kolega<br>
+<cite>neformální hovor</cite>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_vlastní_funkce_v_google_sheets">Vlastní funkce v Google Sheets</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_vstupem_i_výstupem_jeden_operand">Vstupem i výstupem jeden operand</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="comment">/**
+ * Multiplies the input value by 2.
+ *
+ * @param {number} input The value to multiply.
+ * @return The input multiplied by 2.
+ * @customfunction
+ */</span>
+<span class="keyword">function</span> <span class="function">MDOUBLE</span>(input) {
+  <span class="keyword">return</span> input * <span class="integer">2</span>;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vstupem_pole_výstupem_operand">Vstupem pole, výstupem operand</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="keyword">function</span> <span class="function">mujdeterminant</span>(mt) {
+   <span class="keyword">return</span> mt[<span class="integer">0</span>][<span class="integer">0</span>]*mt[<span class="integer">1</span>][<span class="integer">1</span>]-mt[<span class="integer">0</span>][<span class="integer">1</span>]*mt[<span class="integer">1</span>][<span class="integer">0</span>];
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vstupem_pole_výstupem_pole">Vstupem pole, výstupem pole</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="keyword">function</span> <span class="function">mujsoucet</span>(a,b) {
+  c = [[a[<span class="integer">0</span>][<span class="integer">0</span>]+b[<span class="integer">0</span>][<span class="integer">0</span>] , a[<span class="integer">0</span>][<span class="integer">1</span>]+b[<span class="integer">0</span>][<span class="integer">1</span>]],
+    [a[<span class="integer">1</span>][<span class="integer">0</span>]+b[<span class="integer">1</span>][<span class="integer">0</span>] , a[<span class="integer">1</span>][<span class="integer">1</span>]+b[<span class="integer">1</span>][<span class="integer">1</span>]]];
+ <span class="keyword">return</span> c;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vstup_může_být_připraven_na_více_parametrů">Vstup může být připraven na více parametrů</h3>
+<div class="paragraph">
+<p>ve funkci je připraveno pole <em>arguments</em> , jehož velikost si můžeme zjistit&#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="keyword">function</span> <span class="function">mujsoucet</span>() {
+  <span class="keyword">if</span> (<span class="local-variable">arguments</span>.length == <span class="integer">2</span>) <span class="keyword">return</span> <span class="local-variable">arguments</span>[<span class="integer">0</span>]+<span class="local-variable">arguments</span>[<span class="integer">1</span>];
+  <span class="keyword">if</span> (<span class="local-variable">arguments</span>.length == <span class="integer">1</span>) <span class="keyword">return</span> <span class="local-variable">arguments</span>[<span class="integer">0</span>];
+  <span class="keyword">return</span> <span class="integer">0</span>;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cvičení">Cvičení</h3>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Pozor"></i>
+</td>
+<td class="content">
+Vytvoř funkci, která vrátí true/false, podle toho, jestli se jedná o prvočíslo
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Pozor"></i>
+</td>
+<td class="content">
+Vytvoř funkci, která zjistí, jestli je číslo dokonalé
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Pozor"></i>
+</td>
+<td class="content">
+Vytvoř funkci, jejímž vstupem budou 3 číslice, představující koeficienty kv.rce a výstupem budou 3 buňky - D, x1, x2. Pokud konkrétní kořen existovat nebude, zůstane buňka prázdná.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Pozor"></i>
+</td>
+<td class="content">
+Vytvoř funkci, jejímž vstupem bude text a výstupem „zakódovaný“ text ve smyslu posunu v ascii tabulce. Posun budu moci zadat, pokud ho nezadám - posune se o konkrétní hodnotu.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Myšlenka"></i>
+</td>
+<td class="content">
+<strong>Dokonalé číslo</strong> je v matematice označení pro číslo, u kterého platí, že je součtem všech svých dělitelů (kromě sebe samotného). Například číslo 6 má dělitele 1, 2, 3 a platí, že 1 + 2 + 3 = 6. Dalšími takovými čísly jsou ještě např. 28, 496, 8128.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Myšlenka"></i>
+</td>
+<td class="content">
+Matematické funkce v javascriptu na <a href="https://www.w3schools.com/js/js_math.asp">w3schools</a>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Myšlenka"></i>
+</td>
+<td class="content">
+Textové funkce v javascriptu na <a href="https://www.w3schools.com/js/js_string_methods.asp">w3schools</a> &#8230;&#8203; převodní funkce <em>txt.charCodeAt() x String.fromCharCode()</em>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dokument_v_em_apps_script_em_u">Dokument v <em>Apps Script</em>u</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_odkaz_na_aktuální_dokument">Odkaz na aktuální dokument</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript">  <span class="keyword">var</span> doc = SpreadsheetApp.getActive();
+  <span class="keyword">var</span> sheet = SpreadsheetApp.getActiveSheet();
+  <span class="keyword">var</span> sheety = doc.getSheets();
+  Logger.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">adresa: </span><span class="delimiter">&quot;</span></span>+doc.getUrl());
+  Logger.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">aktuální sheet: </span><span class="delimiter">&quot;</span></span>+sheet.getName());
+  doc.setActiveSheet(sheety[sheety.length -<span class="integer">1</span>]);
+  doc.renameActiveSheet(<span class="string"><span class="delimiter">&quot;</span><span class="content">pracovní</span><span class="delimiter">&quot;</span></span>);</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Myšlenka"></i>
+</td>
+<td class="content">
+Vice <a href="https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app">referenční dokumentace - Class SpreadsheetApp</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_akce_v_tabulce">Akce v tabulce</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript">  <span class="keyword">var</span> doc = SpreadsheetApp.getActiveSpreadsheet();
+  <span class="keyword">var</span> sheet = doc.getSheets()[<span class="integer">1</span>];
+  <span class="keyword">var</span> hb1 = sheet.getRange(<span class="string"><span class="delimiter">&quot;</span><span class="content">B1</span><span class="delimiter">&quot;</span></span>).getValue(); <span class="comment">//nebo sheet.getRange(1,2).getValue();</span>
+  sheet.setActiveSelection(<span class="string"><span class="delimiter">&quot;</span><span class="content">A5:D7</span><span class="delimiter">&quot;</span></span>);
+  <span class="keyword">var</span> range =  sheet.getActiveRange();
+  range.setValue(hb1); <span class="comment">//nastaví stejnou hodnotu do každé buňky</span>
+  range.clearFormat();
+  range.setFontLine(<span class="string"><span class="delimiter">'</span><span class="content">line-through</span><span class="delimiter">'</span></span>);
+  range.setFontStyle(<span class="string"><span class="delimiter">&quot;</span><span class="content">italic</span><span class="delimiter">&quot;</span></span>);
+  range.setFontColor(<span class="string"><span class="delimiter">&quot;</span><span class="content">red</span><span class="delimiter">&quot;</span></span>);
+  Logger.log(range.getA1Notation());</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Myšlenka"></i>
+</td>
+<td class="content">
+Podrobně k akcím ve sheetu - viz. <a href="https://developers.google.com/apps-script/reference/spreadsheet/sheet">ref.dokumentace</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_práce_s_daty">Práce s daty</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript">  <span class="keyword">var</span> doc = SpreadsheetApp.getActiveSpreadsheet();
+  <span class="keyword">var</span> sheet = doc.getActiveSheet();
+  <span class="keyword">var</span> range =  sheet.getActiveRange();
+  <span class="keyword">var</span> hodn = range.getValues();
+  Logger.log(hodn);
+  hodn[<span class="integer">0</span>][<span class="integer">1</span>]++; <span class="comment">//navýšena hodnota buňky v prvním řádku, druhém sloupci</span>
+  range.setValues(hodn);
+  range.getCell(<span class="integer">1</span>,<span class="integer">2</span>).setFontColor(<span class="string"><span class="delimiter">&quot;</span><span class="content">red</span><span class="delimiter">&quot;</span></span>); <span class="comment">//ta samá buňka do červena</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ukázka_se_vzorcem">Ukázka se vzorcem</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"> <span class="keyword">var</span> ss = SpreadsheetApp.getActiveSpreadsheet();
+ <span class="keyword">var</span> sheet = ss.getActiveSheet();
+
+ <span class="comment">// V A10 je vzorec =A9*4, A9 = 5</span>
+ <span class="keyword">var</span> range = sheet.getRange(<span class="string"><span class="delimiter">&quot;</span><span class="content">A10</span><span class="delimiter">&quot;</span></span>);
+
+ <span class="comment">// Spočtená hodnota: 20.0 Vzorec: =A9*4 ZápisR1C1: =R[-1]C[0]*4</span>
+  Logger.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">Spočtená hodnota: %s Vzorec: %s ZápisR1C1: %s</span><span class="delimiter">&quot;</span></span>,
+            range.getValue(),
+            range.getFormula(), range.getFormulaR1C1());
+  <span class="comment">//při nastavení jednoho vzorce do celé oblasti se samozřejmě upravuje jako při kopírování</span>
+  sheet.getRange(<span class="string"><span class="delimiter">&quot;</span><span class="content">A10:C12</span><span class="delimiter">&quot;</span></span>).setFormula(<span class="string"><span class="delimiter">&quot;</span><span class="content">=A9*$B$4</span><span class="delimiter">&quot;</span></span>);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kopírování">Kopírování</h3>
+<div class="paragraph">
+<p>Zkopírovat vybranou oblast od konkrétní buňky je snadné. Při kopírování vzorců se tyto samozřejmě upravují jak je zvykem.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript">   <span class="keyword">var</span> ss = SpreadsheetApp.getActiveSpreadsheet();
+   <span class="keyword">var</span> sheet = ss.getActiveSheet();
+   <span class="keyword">var</span> range = sheet.getActiveRange();
+   range.copyTo(sheet.getRange(<span class="string"><span class="delimiter">&quot;</span><span class="content">D13</span><span class="delimiter">&quot;</span></span>));</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cvičení_2">Cvičení</h3>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Pozor"></i>
+</td>
+<td class="content">
+Vytvoř funkci, která ke každé buňce vybrané oblasti přičte jedničku
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Pozor"></i>
+</td>
+<td class="content">
+Vytvoř funkci, která ve vybrané oblasti všechny buňky které budou obsahovat podprůměrnou hodnotou obarví červeně a všechny nadprůměrné zeleně
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Pozor"></i>
+</td>
+<td class="content">
+Vytvoř funkci, která bude řešit libovolnou rovnici (která má na pravé straně 0) metodou půlení intervalů. V první buňce bude dolní mez intervalu, v druhé horní mez, ve třetí hodnota tolerance a v poslední bude vzorec, který bude počítat hodnotu pravé strany rovnice z dolní meze. Můžeme předpokládat, že navržený interval bude mít pro jednu svou mez kladnou a pro druhou zápornou hodnotu pravé strany rovnice. Výsledkem vzorce budou přepsané meze tak, aby jejich vzdálenost na číselné ose byla menší než tolerance.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Pozor"></i>
+</td>
+<td class="content">
+Vyberu čtveřici buněk - první hodnotu, vzorec (operující s první hodnotou), krok a počet hodnot. Pod touto čtveřicí se mi vytvoří tabulka připravená pro vytvoření grafu funkce. &#8230;&#8203; <em>řešení přiloženo</em>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Pozor"></i>
+</td>
+<td class="content">
+Vytvoř si vlastního kontrolora pro hru logik. Do pěti buněk počítač rozmístí 5 různých jednociferných čísel. Tyto čísla budou zakryta bílým inkoustem. Hráč do jedné buňky napíše svůj odhad a spustí skript. Tento skript do vedlejší buňky umístí hodnocení - počet bílých kolíků (uhodnuté číslo na nesprávném pořadí) a počet černých kolíků (uhodnuté číslo na správném pořadí). Skripty tedy budou dva - jeden bude generovat nové zadání a druhý bude hodnotit.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Myšlenka"></i>
+</td>
+<td class="content">
+Vyzkoušej vytvořit tlačítko (<em>insert&#8594;drawing</em>), kterým budeš svůj skript spouštět
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Řešení poslední úlohy z pondělka:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>nejprve doladěná verze ze školy:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="keyword">function</span> <span class="function">tabulkaProGraf</span>() {
+  <span class="keyword">var</span> doc = SpreadsheetApp.getActiveSpreadsheet();
+  <span class="keyword">var</span> sheet = doc.getActiveSheet();
+  <span class="keyword">var</span> range =  sheet.getActiveRange();
+  <span class="keyword">var</span> hodn = range.getValues();
+
+  <span class="keyword">var</span> pocHodnota = hodn[<span class="integer">0</span>][<span class="integer">0</span>];
+  <span class="keyword">var</span> krok = hodn[<span class="integer">0</span>][<span class="integer">2</span>];
+  <span class="keyword">var</span> pocet = hodn[<span class="integer">0</span>][<span class="integer">3</span>];
+
+  <span class="keyword">var</span> zapisovanaHodn = pocHodnota;
+  radka = range.getRow();
+  sloupec = range.getColumn();
+  <span class="keyword">var</span> vzorec = sheet.getRange(radka,sloupec+<span class="integer">1</span>).getFormula();
+  sheet.getRange(radka,sloupec+<span class="integer">1</span>,pocet+<span class="integer">1</span>,<span class="integer">1</span>).setFormula(vzorec);
+  <span class="keyword">for</span>(i=<span class="integer">0</span>;i&lt;pocet;i++) {
+    zapisovanaHodn +=krok;
+    rangezapis = sheet.getRange(radka+<span class="integer">1</span>, sloupec, <span class="integer">1</span>, <span class="integer">1</span>);
+    rangezapis.setValue(zapisovanaHodn);
+    radka++;
+  }
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>lepší nápad pomocí kopírování:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="keyword">function</span> <span class="function">tabulkaProGraf2</span>() {
+  <span class="keyword">var</span> doc = SpreadsheetApp.getActiveSpreadsheet();
+  <span class="keyword">var</span> sheet = doc.getActiveSheet();
+  <span class="keyword">var</span> range =  sheet.getActiveRange();
+  <span class="keyword">var</span> hodn = range.getValues();
+
+  <span class="keyword">var</span> pocHodnota = hodn[<span class="integer">0</span>][<span class="integer">0</span>];
+  <span class="keyword">var</span> krok = hodn[<span class="integer">0</span>][<span class="integer">2</span>];
+  <span class="keyword">var</span> pocet = hodn[<span class="integer">0</span>][<span class="integer">3</span>];
+
+  <span class="keyword">var</span> vzorecBunka = range.offset(<span class="integer">0</span>, <span class="integer">1</span>, <span class="integer">1</span>, <span class="integer">1</span>);
+  vzorecBunka.copyTo(vzorecBunka.offset(<span class="integer">1</span>, <span class="integer">0</span>, pocet, <span class="integer">1</span>));
+
+  posloupnost=[];
+  <span class="keyword">for</span>(i=<span class="integer">1</span>;i&lt;=pocet;i++) posloupnost.push([pocHodnota+i*krok]);
+  range.offset(<span class="integer">1</span>,<span class="integer">0</span>,pocet,<span class="integer">1</span>).setValues(posloupnost);
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vložené_grafy">Vložené grafy</h3>
+<div class="paragraph">
+<p>Když už máme připravené tabulky pro graf - mohli bychom si vytvořit script, který by nám ho generoval&#8230;&#8203;</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Myšlenka"></i>
+</td>
+<td class="content">
+Ukázka jak vygenerovat nebo upravit graf skriptem je <a href="https://developers.google.com/apps-script/reference/spreadsheet/embedded-chart">zde</a>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Pozor"></i>
+</td>
+<td class="content">
+Vytvořit tlačítko, kterým bychom vygenerovali například link-graf pro danou tabulku
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vytvořit_nový_dokument">Vytvořit nový dokument</h3>
+<div class="paragraph">
+<p>Vždy, když už máme k dispozici vygenerovanou tabulku s grafem, mohli bychom jedním tlačítkem nechat vygenerovat textový dokument, ve kterém by bylo pár hodnot z tabulky a samotný graf. Pokaždé, když bychom vygenerovali nový graf, mohli bychom ho jedním tlačítkem přidat do předem daného textového dokumentu.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="keyword">function</span> <span class="function">vytvorDoc</span>() {
+  <span class="keyword">var</span> doc = DocumentApp.create(<span class="string"><span class="delimiter">'</span><span class="content">DokumentPokus</span><span class="delimiter">'</span></span>);
+  doc.getBody().appendParagraph(<span class="string"><span class="delimiter">'</span><span class="content">Vytvořeno ze skriptu!</span><span class="delimiter">'</span></span>);
+  Logger.log(doc.getId() + <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="delimiter">&quot;</span></span> + doc.getUrl());
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="keyword">function</span> <span class="function">upravDoc</span>() {
+  <span class="keyword">var</span> doc = DocumentApp.openById(<span class="string"><span class="delimiter">&quot;</span><span class="content">1kG6-aRt-LX48Wl8dNRyZtT39dvRLnjX84racrDUWMyc</span><span class="delimiter">&quot;</span></span>);
+  doc.getBody().appendParagraph(<span class="string"><span class="delimiter">'</span><span class="content">Přidaná řádka</span><span class="delimiter">'</span></span>);
+
+  <span class="comment">//graf</span>
+  <span class="keyword">var</span> charts = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(<span class="string"><span class="delimiter">'</span><span class="content">grafy</span><span class="delimiter">'</span></span>).getCharts();
+  <span class="keyword">var</span> chart = charts[<span class="integer">0</span>].getAs(<span class="string"><span class="delimiter">'</span><span class="content">image/png</span><span class="delimiter">'</span></span>);  <span class="comment">// similar result with 'gif'</span>
+  <span class="keyword">var</span> doc = DocumentApp.openById(<span class="string"><span class="delimiter">&quot;</span><span class="content">1kG6-aRt-LX48Wl8dNRyZtT39dvRLnjX84racrDUWMyc</span><span class="delimiter">&quot;</span></span>);
+  doc.getBody().appendImage(chart);
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="keyword">function</span> <span class="function">vlozTabulku</span>() {
+  <span class="keyword">var</span> rowsData = [[<span class="string"><span class="delimiter">'</span><span class="content">Plants</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Animals</span><span class="delimiter">'</span></span>], [<span class="string"><span class="delimiter">'</span><span class="content">Ficus</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Goat</span><span class="delimiter">'</span></span>], [<span class="string"><span class="delimiter">'</span><span class="content">Basil</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Cat</span><span class="delimiter">'</span></span>], [<span class="string"><span class="delimiter">'</span><span class="content">Moss</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Frog</span><span class="delimiter">'</span></span>]];
+  <span class="keyword">var</span> doc = DocumentApp.openById(<span class="string"><span class="delimiter">&quot;</span><span class="content">1kG6-aRt-LX48Wl8dNRyZtT39dvRLnjX84racrDUWMyc</span><span class="delimiter">&quot;</span></span>);
+  <span class="keyword">var</span> body = doc.getBody();
+  table = body.appendTable(rowsData);
+  table.getRow(<span class="integer">0</span>).editAsText().setBold(<span class="predefined-constant">true</span>);
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Myšlenka"></i>
+</td>
+<td class="content">
+Podrobněji viz. <a href="https://developers.google.com/apps-script/guides/docs#structure_of_a_document">developers.google.com</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_práce_s_kalendářem">Práce s kalendářem</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"> <span class="keyword">var</span> calendar = CalendarApp.createCalendar(<span class="string"><span class="delimiter">'</span><span class="content">Exkurze</span><span class="delimiter">'</span></span>);
+ Logger.log(<span class="string"><span class="delimiter">'</span><span class="content">Created the calendar &quot;%s&quot;, with the ID &quot;%s&quot;.</span><span class="delimiter">'</span></span>,
+     calendar.getName(), calendar.getId());</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"> <span class="keyword">var</span> calendar = CalendarApp.getCalendarById(
+     <span class="string"><span class="delimiter">'</span><span class="content">en.usa#holiday@group.v.calendar.google.com</span><span class="delimiter">'</span></span>);
+ Logger.log(<span class="string"><span class="delimiter">'</span><span class="content">The calendar is named &quot;%s&quot;.</span><span class="delimiter">'</span></span>, calendar.getName());
+
+ <span class="keyword">var</span> event = calendar.createAllDayEvent(<span class="string"><span class="delimiter">'</span><span class="content">Exkurze Boubín</span><span class="delimiter">'</span></span>,
+     <span class="keyword">new</span> Date(<span class="string"><span class="delimiter">'</span><span class="content">July 20, 2017</span><span class="delimiter">'</span></span>));
+ Logger.log(<span class="string"><span class="delimiter">'</span><span class="content">Event ID: </span><span class="delimiter">'</span></span> + event.getId());</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"> <span class="keyword">var</span> now = <span class="keyword">new</span> Date();
+ <span class="keyword">var</span> twoHoursFromNow = <span class="keyword">new</span> Date(now.getTime() + (<span class="integer">2</span> * <span class="integer">60</span> * <span class="integer">60</span> * <span class="integer">1000</span>));
+ <span class="keyword">var</span> events = CalendarApp.getDefaultCalendar().getEvents(now, twoHoursFromNow);
+ Logger.log(<span class="string"><span class="delimiter">'</span><span class="content">Number of events: </span><span class="delimiter">'</span></span> + events.length);</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Myšlenka"></i>
+</td>
+<td class="content">
+Podrobněji v referenční nápovědě https://developers.google.com/apps-script/reference/calendar/calendar-app#getDefaultCalendar()  [CalendarApp]
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Pozor"></i>
+</td>
+<td class="content">
+Kdybychom měli seznam navrhovaných akcí, u každé by bylo uvedno počáteční a koncové datum a název akce, uměli bychom napsat script, který by nám vždy akci na které bychom byli kurzorem zapsal do kalendáře a viditelně označil? Pokud by v řádku byla i mailová adresa - mohli bychom rovnou odesílat i mail, že s navrhovanou akcí počítáme.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Myšlenka"></i>
+</td>
+<td class="content">
+odeslání mailu je s třídou <a href="https://developers.google.com/apps-script/reference/mail/mail-app MailApp snadne:">MailApp</a> snadné:
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="keyword">var</span> emailAddress = row[<span class="integer">0</span>];  <span class="comment">// First column</span>
+    <span class="keyword">var</span> message = row[<span class="integer">1</span>];       <span class="comment">// Second column</span>
+    <span class="keyword">var</span> subject = <span class="string"><span class="delimiter">&quot;</span><span class="content">Sending emails from a Spreadsheet</span><span class="delimiter">&quot;</span></span>;
+    MailApp.sendEmail(emailAddress, subject, message);</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Myšlenka"></i>
+</td>
+<td class="content">
+Když už máme kalendář, tak bychom si ho mohli vložit na nějaké webové stránky&#8230;&#8203;
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sbíráme_a_vyhodnocujeme_data_formulářem">Sbíráme a vyhodnocujeme data formulářem</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Připravíme si formulář registrace na smyšlenou akci:
+- Jméno
+- Právo na slevu?
+- Které dny účasten?
+- Jak moc aktivní účastník?
+- Max. počet spolunocležníků
+- Návrh doby snídaně
+- Jídlo pro každý den (nic, polo, plná penze)</p>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Pozor"></i>
+</td>
+<td class="content">
+Připravíme script, který všem zaregistrovaným účastíkům odešle potvrzující mail se souhrnnou cenou a dobou snídaně. Je možné také umístit kurzor na daného účastníka a stisknout tlačítko k odeslání potvrzujícího mailu, nebo tlačítko k vyškrtnutí s tím, že nezaplatil, v takovém případě je vhodné pracovat s kopií tabulky odpovědí&#8230;&#8203;
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Myšlenka"></i>
+</td>
+<td class="content">
+Jak posílat mail&#8230;&#8203; <a href="https://developers.google.com/apps-script/reference/mail/mail-app">Class MailApp</a>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Myšlenka"></i>
+</td>
+<td class="content">
+Umístím kurzor na řádku a spustím skript - kde se momentálně nacházím? jak vyškrtnu či přepíšu? &#8594;
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"> <span class="keyword">var</span> ss = SpreadsheetApp.getActiveSpreadsheet();
+ <span class="keyword">var</span> sheet = ss.getActiveSheet();
+
+ <span class="keyword">var</span> range = sheet.getActiveCell();
+ Logger.log(range.getRow() + <span class="string"><span class="delimiter">&quot;</span><span class="content"> - </span><span class="delimiter">&quot;</span></span>+range.getColumn());
+
+ range = sheet.getRange(<span class="integer">1</span>,<span class="integer">2</span>); <span class="comment">//přesunu na B1</span>
+ range.setFontLine(<span class="string"><span class="delimiter">'</span><span class="content">line-through</span><span class="delimiter">'</span></span>); <span class="comment">//vyškrtnu</span>
+ range.setValue(<span class="string"><span class="delimiter">&quot;</span><span class="content">buňka B1</span><span class="delimiter">&quot;</span></span>);
+
+ range = sheet.getRange(<span class="integer">3</span>,<span class="integer">2</span>,<span class="integer">1</span>,<span class="integer">5</span>); <span class="comment">//od B1 jednu řádku a pět sloupců</span>
+ range.setFontLine(<span class="string"><span class="delimiter">'</span><span class="content">line-through</span><span class="delimiter">'</span></span>); <span class="comment">//vyškrtnu</span>
+ range.setValue(<span class="string"><span class="delimiter">&quot;</span><span class="content">víc buněk</span><span class="delimiter">&quot;</span></span>); <span class="comment">//do všech pěti buněk</span>
+ ss.setActiveSelection(range);</code></pre>
+</div>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Pozor"></i>
+</td>
+<td class="content">
+Připravíme script, který vytvoří přehled pro pořadatele - počet jídel pro jednotlivé dny, přehled počtu a druhů pokojů, které je třeba registrovat, minimální počet nahlášených přednášek a seznam jmen s vybranou sumou peněz.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Myšlenka"></i>
+</td>
+<td class="content">
+Nejprve si do 2D pole připravím hodnoty, se kterými budu pracovat&#8230;&#8203;
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript">  <span class="keyword">var</span> doc = SpreadsheetApp.getActiveSpreadsheet();
+  <span class="keyword">var</span> sheet = doc.getSheets()[<span class="integer">0</span>]; <span class="comment">//v prvním sheetu mám data z formuláře</span>
+  <span class="keyword">var</span> range = sheet.getDataRange(); <span class="comment">//rozsah všech dat</span>
+  <span class="keyword">var</span> hodn = range.getValues(); <span class="comment">//hodnoty celého rozsahu</span>
+  Logger.log(hodn);</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Myšlenka"></i>
+</td>
+<td class="content">
+Pak si otevřu sheet, do kterého budu zapisovat&#8230;&#8203;
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"> <span class="keyword">var</span> writesheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(<span class="string"><span class="delimiter">&quot;</span><span class="content">Přehled</span><span class="delimiter">&quot;</span></span>);
+ <span class="keyword">if</span> (writesheet != <span class="predefined-constant">null</span>) {
+     writesheet.getRange(<span class="integer">1</span>,<span class="integer">1</span>).setValue(<span class="string"><span class="delimiter">&quot;</span><span class="content">Přehled akce...</span><span class="delimiter">&quot;</span></span>);
+     <span class="comment">//atd</span>
+ } <span class="keyword">else</span> {
+   Logger.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">problém -&gt; nemám sheet Přehled</span><span class="delimiter">&quot;</span></span>);
+ }</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dialogy_komfortnější_komunikace_s_uživatelem">Dialogy - komfortnější komunikace s uživatelem</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Na dialogy a menu se hodí <a href="https://developers.google.com/apps-script/reference/base/ui">třída Ui</a></p>
+</div>
+<div class="sect2">
+<h3 id="_standardní_dialogy">Standardní dialogy</h3>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Myšlenka"></i>
+</td>
+<td class="content">
+Podrobně vysvětleno <a href="https://developers.google.com/apps-script/guides/dialogs">zde</a>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Využití jednoduchého triggeru <strong>onOpen</strong> na vytvoření menu a dialog ano/ne</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="keyword">function</span> <span class="function">onOpen</span>() {
+  SpreadsheetApp.getUi() <span class="comment">// Or DocumentApp or FormApp.</span>
+      .createMenu(<span class="string"><span class="delimiter">'</span><span class="content">Custom Menu</span><span class="delimiter">'</span></span>)
+      .addItem(<span class="string"><span class="delimiter">'</span><span class="content">Show alert</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">showAlert</span><span class="delimiter">'</span></span>)
+      .addItem(<span class="string"><span class="delimiter">'</span><span class="content">Show prompt</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">showPrompt</span><span class="delimiter">'</span></span>)
+      .addToUi();
+}
+
+<span class="keyword">function</span> <span class="function">showAlert</span>() {
+  <span class="keyword">var</span> ui = SpreadsheetApp.getUi(); <span class="comment">// Same variations.</span>
+
+  <span class="keyword">var</span> result = ui.alert(
+     <span class="string"><span class="delimiter">'</span><span class="content">Please confirm</span><span class="delimiter">'</span></span>,
+     <span class="string"><span class="delimiter">'</span><span class="content">Are you sure you want to continue?</span><span class="delimiter">'</span></span>,
+      ui.ButtonSet.YES_NO);
+
+  <span class="comment">// Process the user's response.</span>
+  <span class="keyword">if</span> (result == ui.Button.YES) {
+    <span class="comment">// User clicked &quot;Yes&quot;.</span>
+    ui.alert(<span class="string"><span class="delimiter">'</span><span class="content">Confirmation received.</span><span class="delimiter">'</span></span>);
+  } <span class="keyword">else</span> {
+    <span class="comment">// User clicked &quot;No&quot; or X in the title bar.</span>
+    ui.alert(<span class="string"><span class="delimiter">'</span><span class="content">Permission denied.</span><span class="delimiter">'</span></span>);
+  }
+}
+
+<span class="keyword">function</span> <span class="function">showPrompt</span>() {
+  <span class="keyword">var</span> ui = SpreadsheetApp.getUi(); <span class="comment">// Same variations.</span>
+
+  <span class="keyword">var</span> result = ui.prompt(
+      <span class="string"><span class="delimiter">'</span><span class="content">Let</span><span class="char">\'</span><span class="content">s get to know each other!</span><span class="delimiter">'</span></span>,
+      <span class="string"><span class="delimiter">'</span><span class="content">Please enter your name:</span><span class="delimiter">'</span></span>,
+      ui.ButtonSet.OK_CANCEL);
+
+  <span class="comment">// Process the user's response.</span>
+  <span class="keyword">var</span> button = result.getSelectedButton();
+  <span class="keyword">var</span> text = result.getResponseText();
+  <span class="keyword">if</span> (button == ui.Button.OK) {
+    <span class="comment">// User clicked &quot;OK&quot;.</span>
+    ui.alert(<span class="string"><span class="delimiter">'</span><span class="content">Your name is </span><span class="delimiter">'</span></span> + text + <span class="string"><span class="delimiter">'</span><span class="content">.</span><span class="delimiter">'</span></span>);
+  } <span class="keyword">else</span> <span class="keyword">if</span> (button == ui.Button.CANCEL) {
+    <span class="comment">// User clicked &quot;Cancel&quot;.</span>
+    ui.alert(<span class="string"><span class="delimiter">'</span><span class="content">I didn</span><span class="char">\'</span><span class="content">t get your name.</span><span class="delimiter">'</span></span>);
+  } <span class="keyword">else</span> <span class="keyword">if</span> (button == ui.Button.CLOSE) {
+    <span class="comment">// User clicked X in the title bar.</span>
+    ui.alert(<span class="string"><span class="delimiter">'</span><span class="content">You closed the dialog.</span><span class="delimiter">'</span></span>);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Pozor"></i>
+</td>
+<td class="content">
+Vyber si některou s předchozích úloh (půlení intervalů/logik/funkční hodnoty) a udělej k nim komfortnější ovládání pomocí oznamovacího a promptního standardního dialogu.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rozšíření_triggerů">Rozšíření „triggerů“</h3>
+<div class="sect3">
+<h4 id="_onedit">onEdit</h4>
+<div class="paragraph">
+<p>Vyzkoušeli jsme si trigger <em>onOpen</em>, další hodně používaný je <em>onEdit</em> &#8594; spouští se při každém pokusu o editaci. Jako parametr získává <em>event</em> - událost, tedy objekt, který obsahuje mimo jiné zajímavé prvky:
+- <em>range</em> &#8230;&#8203; tedy rozsah, který byl editován
+- <em>value</em> &#8230;&#8203; tedy nová hodnota
+- <em>oldValue</em> &#8230;&#8203; původní hodnota</p>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Pozor"></i>
+</td>
+<td class="content">
+Zkusme si vytvořit skript, který umožní do volného pole vložit novou hodnotu, ale při pokusu o její přepsání se tam vrátí vždy původní hodnota. Takový dokument může být užitečný, pokud budeme chtít, aby přihlášení uživatelé tabulky někam něco mohli vepsat&#8230;&#8203; ale ne přepisovat.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_instalovatelné_triggery">Instalovatelné „triggery“</h4>
+<div class="paragraph">
+<p>Menu v „editoru skriptů“ &#8594; Upravit &#8594; Spouštěče aktuálního projektu. Kromě ručního zadání je možné aby trigger nastavil náš skript v okamžiku, kdy je potřeba:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript">    ScriptApp.newTrigger(<span class="string"><span class="delimiter">'</span><span class="content">myFunction</span><span class="delimiter">'</span></span>)
+      .timeBased().everyMinutes(<span class="integer">1</span>).create();</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Myšlenka"></i>
+</td>
+<td class="content">
+podrobněji rozebráno <a href="https://developers.google.com/apps-script/guides/triggers/installable">zde</a>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Pozor"></i>
+</td>
+<td class="content">
+Časové triggery by se daly využít například na nějaké odpočítávání času testu, ale mohli bychom si vytvořit tabulku, do které bychom si ukládali datum, mailovou adresu a zprávu. Náš skript projde celý seznam, odešle zprávy, které mají být odeslány dnes a naplánuje vlastní spuštění na nejbližší další datum
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vlastní_dialogy">Vlastní dialogy</h3>
+<div class="paragraph">
+<p>Lze zobrazit klasickou web stránku, například <em>Page.html</em></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="keyword">function</span> <span class="function">showDialog</span>() {
+  <span class="keyword">var</span> html = HtmlService.createHtmlOutputFromFile(<span class="string"><span class="delimiter">'</span><span class="content">Page</span><span class="delimiter">'</span></span>)
+      .setWidth(<span class="integer">400</span>)
+      .setHeight(<span class="integer">300</span>);
+  SpreadsheetApp.getUi() <span class="comment">// Or DocumentApp or FormApp.</span>
+      .showModalDialog(html, <span class="string"><span class="delimiter">'</span><span class="content">My custom dialog</span><span class="delimiter">'</span></span>);
+}
+
+<span class="keyword">function</span> <span class="function">doSomething</span>() {
+  Logger.log(<span class="string"><span class="delimiter">'</span><span class="content">I was called!</span><span class="delimiter">'</span></span>);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>... která může vypadat takto:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html"><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+  <span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;base</span> <span class="attribute-name">target</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">_top</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;script&gt;</span>
+<span class="inline">      google.script.run.doSomething();</span>
+    <span class="tag">&lt;/script&gt;</span>
+  <span class="tag">&lt;/head&gt;</span>
+  <span class="tag">&lt;body&gt;</span>
+    Hello, World!
+    <span class="tag">&lt;input</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">button</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Close</span><span class="delimiter">&quot;</span></span>
+        <span class="attribute-name">onclick</span>=<span class="string"><span class="delimiter">&quot;</span>google.script.host.close()<span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+  <span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Tento dialog nepozastaví skript na serveru (ze kterého byl zobrazen), nicméně může pomocí volání <em>google.script</em> a pomocí <em>handlerů</em> komunikovat se server-side skriptem.</p>
+</li>
+<li>
+<p>Volali jsme server-side funkci - volání je asynchronní, provádění <em>Page.html</em> pokračuje &#8658; trochu problém s předáváním parametrů - viz.dále</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Pokud bude náš skript obsahovat další jednoduchý trigger <strong>doGet</strong>, tak se nám stránka otevře kdykoliv se obrátíme na URL našeho skriptu třeba prohlížečem:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="keyword">function</span> <span class="function">doGet</span>() {
+  <span class="keyword">return</span> HtmlService.createHtmlOutputFromFile(<span class="string"><span class="delimiter">'</span><span class="content">Page</span><span class="delimiter">'</span></span>);
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_komunikace_client_server">Komunikace Client &lt;&#8594; Server</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="keyword">function</span> <span class="function">doGet</span>() {
+  <span class="keyword">return</span> HtmlService.createHtmlOutputFromFile(<span class="string"><span class="delimiter">'</span><span class="content">Index</span><span class="delimiter">'</span></span>);
+}
+
+<span class="keyword">function</span> <span class="function">getUnreadEmails</span>() {
+  <span class="keyword">return</span> GmailApp.getInboxUnreadCount();
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript">&lt;!DOCTYPE html&gt;
+<span class="tag">&lt;html&gt;</span>
+  <span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;base</span> <span class="attribute-name">target</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">_top</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;script&gt;</span>
+<span class="inline">      <span class="keyword">function</span> <span class="function">onSuccess</span>(numUnread) {
+        <span class="keyword">var</span> div = document.getElementById(<span class="string"><span class="delimiter">'</span><span class="content">output</span><span class="delimiter">'</span></span>);
+        div.innerHTML = <span class="string"><span class="delimiter">'</span><span class="content">You have </span><span class="delimiter">'</span></span> + numUnread
+            + <span class="string"><span class="delimiter">'</span><span class="content"> unread messages in your Gmail inbox.</span><span class="delimiter">'</span></span>;
+      }
+
+      google.script.run.withSuccessHandler(onSuccess)
+          .getUnreadEmails();</span>
+    <span class="tag">&lt;/script&gt;</span>
+  <span class="tag">&lt;/head&gt;</span>
+  <span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">output</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Pozor"></i>
+</td>
+<td class="content">
+Vytvoř vlastní web stránku, která bude dostávat při každém načtení (nebo stištění tlačítka) „výroky moudrých“ připravené v tabulkovém kalkulátoru. Server-side funkce vybere náhodný výrok a odešle ho k zobrazení podobně jako počet nepřečtených zpráv v ukázkovém příkladu.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Pozor"></i>
+</td>
+<td class="content">
+Server-side skript si bude udržovat svojí zásobu slovíček (dva sloupce). Při každém zavolání promíchá pořadí slov a celé pole odešle clientovi. Ten bude vhodným způsobem předkládat toto pole slovních spojení uživatelovi k procvičování.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_získávání_informací_parsováním_webů">Získávání informací parsováním webů</h2>
+<div class="sectionbody">
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>„Když umíme googlit my, proč ne i naše prográmky?“</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; Hrbek
+</div>
+</div>
+<div class="sect2">
+<h3 id="_importfeed">importfeed</h3>
+<div class="paragraph">
+<p>Asi nejpohodlnější je získat informace z RSS zdroje. Jednak je obecně dostupný a jednak je struktura těchto dat obvykle tvořena strojově a tím pádem je i náš výstup bezchybný. Google Sheets nám k tomu poskytuje spolehlivou funkci:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>=importfeed("https://zpravy.aktualne.cz/rss/zahranici/?_ga=2.190788203.151206811.1498994209-1889217661.1495482134","items title",TRUE)</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Myšlenka"></i>
+</td>
+<td class="content">
+podrobnější popis <a href="https://support.google.com/docs/answer/3093337?hl=en">zde</a>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Vyzkoušejte si vyparsovat informace například z IDNES, pohrajte si s parametry. Kdo má chuť, může si zkusit těmito „ukradnutými“ informacemi plnit svůj prográmek, který předkládal „výroky moudrých“ v předchozí kapitole.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_importhtml">importhtml</h3>
+<div class="paragraph">
+<p>Pokud není k dispozici RSS kanál a daná stránka obsahuje seznamy/tabulky, může se hodit užitečná funkce importhtml.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Myšlenka"></i>
+</td>
+<td class="content">
+podrobněji: <a href="https://support.google.com/docs/answer/3093339?hl=en" class="bare">https://support.google.com/docs/answer/3093339?hl=en</a>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Vyzkoušejte například na rozvrhu <strong>učitelů Gymso</strong>:</p>
+</div>
+<div class="paragraph">
+<p>Místnost:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&amp;mistnost=7.%20B" class="bare">https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&amp;mistnost=7.%20B</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&amp;mistnost=7.%20B&amp;obdobi=PRISTI" class="bare">https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&amp;mistnost=7.%20B&amp;obdobi=PRISTI</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&amp;mistnost=7.%20B&amp;obdobi=1" class="bare">https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&amp;mistnost=7.%20B&amp;obdobi=1</a></p>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Třída:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&amp;trida=7.B" class="bare">https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&amp;trida=7.B</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&amp;trida=7.B&amp;obdobi=PRISTI" class="bare">https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&amp;trida=7.B&amp;obdobi=PRISTI</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&amp;trida=7.B&amp;obdobi=1" class="bare">https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&amp;trida=7.B&amp;obdobi=1</a></p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Učitel:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&amp;ucitel=Hrbek" class="bare">https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&amp;ucitel=Hrbek</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&amp;ucitel=Hrbek&amp;obdobi=PRISTI" class="bare">https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&amp;ucitel=Hrbek&amp;obdobi=PRISTI</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&amp;ucitel=Hrbek&amp;obdobi=1" class="bare">https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&amp;ucitel=Hrbek&amp;obdobi=1</a></p>
+</div>
+<div class="paragraph">
+<p>Jinak háčky čárky samozřejmě encodovat&#8230;&#8203;
+<a href="https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&amp;ucitel=%C5%A0v%C3%A1cha" class="bare">https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&amp;ucitel=%C5%A0v%C3%A1cha</a></p>
+</div>
+<div class="paragraph">
+<p>nebo třeba <strong>měnové kurzy</strong>: <a href="http://www.xe.com" class="bare">http://www.xe.com</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_chce_to_přepsat_do_apps_scriptu">Chce to přepsat do apps-scriptu</h3>
+<div class="paragraph">
+<p>Proč? Protože se nám funkce nebude obnovovat i když na webu ke změně dojde a na skript můžeme nastavit časový trigger. Ten pak poběží i když náší tabulku zavřeme a pokud budeme informace zprostředkovávat například pomocí doget &#8594; tak budou informace stále aktuální. Hrbek by si mohl na svůj stálý rozvrh připravit např. tuto funkci:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="keyword">function</span> <span class="function">getData</span>() {
+  <span class="keyword">var</span> queryString = Math.random();
+  <span class="keyword">var</span> cellFunction = <span class="string"><span class="delimiter">'</span><span class="content">=IMPORTHTML(&quot;https://bakalari.gymso.cz/rozvrh.aspx?nazev=0&amp;ucitel=Hrbek&amp;obdobi=1?</span><span class="delimiter">'</span></span> + queryString + <span class="string"><span class="delimiter">'</span><span class="content">&quot;,&quot;table&quot;,14)</span><span class="delimiter">'</span></span>;
+
+  SpreadsheetApp.getActiveSheet().getRange(<span class="string"><span class="delimiter">'</span><span class="content">B4</span><span class="delimiter">'</span></span>).setValue(cellFunction);
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_trochu_si_pohrajeme_s_mapou">Trochu si pohrajeme s mapou</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="keyword">function</span> <span class="function">showHtmlWin</span>() {
+  <span class="keyword">var</span> html = HtmlService.createHtmlOutputFromFile(<span class="string"><span class="delimiter">'</span><span class="content">pok.html</span><span class="delimiter">'</span></span>).setWidth(<span class="integer">800</span>);
+  SpreadsheetApp.getUi().showModalDialog(html, <span class="string"><span class="delimiter">&quot;</span><span class="content">Memword</span><span class="delimiter">&quot;</span></span>); <span class="comment">//.showSidebar(html);</span>
+}
+
+
+
+<span class="keyword">function</span> <span class="function">getMapu</span>() {
+   <span class="comment">// Get the sheet named 'restaurants'</span>
+  <span class="keyword">var</span> sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(<span class="string"><span class="delimiter">'</span><span class="content">restaurants</span><span class="delimiter">'</span></span>);
+
+  <span class="comment">// Store the restaurant name and address data in a 2-dimensional array called</span>
+  <span class="comment">// restaurantInfo. This is the data in cells A2:B4</span>
+  <span class="keyword">var</span> restaurantInfo = sheet.getRange(<span class="integer">2</span>, <span class="integer">1</span>, sheet.getLastRow() - <span class="integer">1</span>, <span class="integer">2</span>).getValues();
+
+  <span class="comment">// Create a new StaticMap</span>
+  <span class="keyword">var</span> restaurantMap = Maps.newStaticMap();
+
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="integer">0</span>; i &lt; restaurantInfo.length; i++) {
+    restaurantMap.setMarkerStyle(Maps.StaticMap.MarkerSize.MID,
+                                 Maps.StaticMap.Color.GREEN,
+                                 i + <span class="integer">1</span>);
+    restaurantMap.addMarker(restaurantInfo[i][<span class="integer">1</span>]);
+  }
+
+  <span class="keyword">return</span> restaurantMap.getMapUrl();
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript">&lt;!DOCTYPE html&gt;
+<span class="tag">&lt;html&gt;</span>
+  <span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;base</span> <span class="attribute-name">target</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">_top</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;script&gt;</span>
+<span class="inline">            <span class="keyword">function</span> <span class="function">addMap</span>() {
+               w = google.script.run.withSuccessHandler(onSuccess).getMapu();
+            }
+
+            <span class="keyword">function</span> <span class="function">onSuccess</span>(wrd) {
+                s = document.getElementById(<span class="string"><span class="delimiter">&quot;</span><span class="content">map</span><span class="delimiter">&quot;</span></span>);
+                s.src = wrd;
+            }</span>
+
+
+
+    <span class="tag">&lt;/script&gt;</span>
+
+
+  <span class="tag">&lt;/head&gt;</span>
+  <span class="tag">&lt;body</span> <span class="attribute-name">onload</span>=<span class="string"><span class="delimiter">&quot;</span>addMap()<span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    tady...<span class="tag">&lt;br&gt;</span>
+    <span class="tag">&lt;img</span> <span class="attribute-name">src</span>=<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">map</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+  <span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><em>Pokračovat přes 'fetchup', regulární výrazy, fusion a sql&#8230;&#8203;</em></p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-07-04 00:43:40 CEST
+</div>
+</div>
+</body>
+</html>

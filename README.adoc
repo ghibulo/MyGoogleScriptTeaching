@@ -1,0 +1,17 @@
+== Příprava na výuku kurzu tématicky zaměřeného na Google Apps
+
+psáno pomocí *asciidoctor*
+
+společně tvořené ukázkové příklady:
+
+- trigger doGet, javascript-client si slovíčka se načítá z google-sheetu
+https://docs.google.com/spreadsheets/d/1QN-VreQyacWAKoCN5-wcW2zWwhcgY5P6naR-kbo8o7Q/edit?usp=sharing
+
+
+- hra logik, práce s buňkou, grafy, nový dokument
+https://docs.google.com/spreadsheets/d/1JCU0jEgqA7ojQYSghtImx5NL8Nk6xPZyiJiOkmXWSnE/edit?usp=sharing
+
+- parsování pomocí importfeed/importhtml/fetchup -> regulární výrazy
+https://docs.google.com/spreadsheets/d/1vyflv0wpJSnEiHX9ulqpO57ZrTJE7Al1WaelSgKZr-I/edit?usp=sharing
+
+
